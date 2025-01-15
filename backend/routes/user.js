@@ -86,8 +86,9 @@ router.post("/signin", async (req, res) => {
     //     userName: req.body.username,
     //     password: req.body.password
     // })
+    
     if (user) {
-        const passwordMatched=await bcrypt.compare(req.body.password)
+        const passwordMatched=await bcrypt.compare(req.body.password,user.password)
         if(passwordMatched){
             const token = jwt.sign({
                 userId: user._id
