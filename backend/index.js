@@ -4,7 +4,11 @@ const rootRouter=require("./routes/index");
 const cors=require("cors");
 const app=express();
 
-app.use(cors());
+const cors = require('cors');
+app.use(cors({
+  origin: 'https://pay-now-akashnegi9690s-projects.vercel.app',
+  methods: ['GET', 'POST'],
+}));
 app.use(express.json());
 app.use("/api/v1",rootRouter);
 
