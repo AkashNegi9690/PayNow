@@ -4,6 +4,7 @@ import { Signin } from "./pages/Signin"
 import { Dashboard } from "./pages/Dashboard"
 import { SendMoney } from "./pages/Sendmoney"
 import "./App.css";
+import LandingPage from "./pages/Landing"
 
 function App() {
 
@@ -11,7 +12,7 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Signup/>}></Route>
+          <Route path="/" element={<LandingPage/>}></Route>
           <Route path="/signup" element={<Signup />} />
           <Route path="/signin" element={<Signin />} />
           <Route path="/dashboard" element={<Dashboard />} />
