@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
 const { User, Account } = require("../db.js");
 const jwtSecret = process.env.jwtSecret;
 const { authMiddleware } = require("../middleware.js");
+const bcrypt=require('bcrypt');
 
 const signupBody = zod.object({
     userName: zod.string().email(),
@@ -41,11 +42,12 @@ router.post("/signup", async (req, res) => {
             message: "Email already taken/Incorrect inputs"
         })
     }
+    const hashedPassword = await bcrypt.hash(req.body.password, 5)
     const user = await User.create({
         userName: req.body.userName,
         firstName: req.body.firstName,
         lastName: req.body.lastName,
-        password: req.body.password
+        password: hashedPassword
     })
 
     const userId = user._id;
@@ -77,20 +79,30 @@ router.post("/signin", async (req, res) => {
             message: "incorrect inputs"
         })
     }
-
     const user = await User.findOne({
         userName: req.body.username,
-        password: req.body.password
     })
+    // const user = await User.findOne({
+    //     userName: req.body.username,
+    //     password: req.body.password
+    // })
     if (user) {
-        const token = jwt.sign({
-            userId: user._id
-        }, jwtSecret);
-
-        res.json({
-            token: token
-        })
-        return;
+        const passwordMatched=await bcrypt.compare(req.body.password)
+        if(passwordMatched){
+            const token = jwt.sign({
+                userId: user._id
+            }, jwtSecret);
+    
+            res.json({
+                token: token
+            })
+            return;
+        }else{
+            res.status(401).json({
+                message:"wrong password"
+            })
+        }
+        
     }
 
     res.status(411).json({
