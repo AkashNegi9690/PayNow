@@ -28,7 +28,7 @@ router.post("/signup", async (req, res) => {
         console.log(req.body)
         return res.status(411).json({
             message: "Email already taken/incorrect inputs",
-            errors: error.map(err => err.message).join(', ')
+            errors: error.errors.map(err => err.message).join(', ')
         })
     
     }
