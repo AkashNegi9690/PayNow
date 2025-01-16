@@ -16,7 +16,7 @@ export const Signup = () => {
   const navigate = useNavigate()
 
   return (
-    <div  iv className="bg-blue-500 text-white min-h-screen">
+    <div  iv className="bg-blue-500 min-h-screen">
       <div className="h-16 shadow-md border border-b-2 bg-white flex items-center"><div className=" text-blue-500 font-semibold text-2xl mx-5">PayNow</div></div>
       {/* Hero Section */}
       <section className="text-center py-10 px-4" id="hero">
@@ -30,9 +30,9 @@ export const Signup = () => {
       {/* Signup Form */}
       <div className="flex justify-center pb-10">
         <div className="rounded-lg bg-white w-96 text-center p-8">
-          <label className="text-2xl font-semibold text-gray-700 mb-4" >Sign Up</label>
-          <p className="mb-8 text-gray-500" >Enter your information to create an account</p>
-          
+          <Heading label={"Signup"}/>
+          <SubHeading label={"Enter your credentials to access your account"} />
+
           
           <InputBox
             onChange={(e) => setFirstName(e.target.value)}
@@ -76,7 +76,9 @@ export const Signup = () => {
             label="Sign up"
             className="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600 transition-all"
           />
-          <p className="mt-6 text-gray-700 hover:cursor-pointer" onClick={()=>{navigate('/signin')}}>Already have an account?</p>
+          {/* <p className="mt-6 text-gray-700 hover:cursor-pointer" onClick={()=>{navigate('/signin')}}>Already have an account?</p> */}
+          <BottomWarning label={"Don't have an account?"} buttonText={"Sign in"} to={"/signin"} />
+
         </div>
       </div>
 
