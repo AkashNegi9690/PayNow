@@ -14,30 +14,39 @@ export const Signup = () => {
   const [userName, setUserName] = useState("")
   const [password, setPassword] = useState("")
   const navigate = useNavigate()
-  const handleSubmit=async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await axios.post("https://paynow-7wln.onrender.com/api/v1/user/signup", {
-      userName,
-      firstName,
-      lastName,
-      password
-    })
-    localStorage.setItem("token", response.data.token)
-    if (response.status === 200) {
-      navigate("/signin")
+    try {
+      const response = await axios.post("https://paynow-7wln.onrender.com/api/v1/user/signup", {
+        userName,
+        firstName,
+        lastName,
+        password
+      })
+  
+      localStorage.setItem("token", response.data.token)
+      if (response.status === 200) {
+        navigate("/signin")
+      }
+    } catch (error) {
+      if (error.response && error.response.status === 411) {
+        console.log("hello");
+        alert(error.response.data.message);
+       
+      }
     }
-    if(response.status === 411){
-      alert(response.data.error);
-    }
+   
+
+    
   }
   return (
-    <div  className="bg-blue-500 min-h-screen">
+    <div className="bg-blue-500 min-h-screen">
       <div className="h-16 shadow-md border border-b-2 bg-white flex items-center"><div className=" text-blue-500 font-semibold text-2xl mx-5">PayNow</div></div>
       {/* Hero Section */}
       <section className="text-center py-10 px-4" id="hero">
         <div className="container mx-auto">
           <label className="text-4xl font-bold">Create Your PayNow Account</label>
-         
+
           <p >Join us today to start sending and receiving money seamlessly.</p>
         </div>
       </section>
@@ -45,47 +54,47 @@ export const Signup = () => {
       {/* Signup Form */}
       <div className="flex justify-center pb-10">
         <form onSubmit={handleSubmit} className="rounded-lg w-96 text-center p-8 bg-white">
-        <div className=" bg-white ">
-          <Heading label={"Signup"}/>
-          <SubHeading label={"Enter your credentials to access your account"} />
+          <div className=" bg-white ">
+            <Heading label={"Signup"} />
+            <SubHeading label={"Enter your credentials to access your account"} />
 
-          
-          <InputBox
-            onChange={(e) => setFirstName(e.target.value)}
-            placeholder="John"
-            label="First Name"
-            className="mb-4"
-          />
-          <InputBox
-            onChange={(e) => setLastName(e.target.value)}
-            placeholder="Doe"
-            label="Last Name"
-            className="mb-4"
-          />
-          <InputBox
-            onChange={(e) => setUserName(e.target.value)}
-            placeholder="akash@gmail.com"
-            label="Email"
-            className="mb-4"
-            type="email"
-          />
-          <InputBox
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="123456"
-            label="Password"
-            type="password"
-            className="mb-6"
-          />
-          <p className="text-sm text-gray-400">*password must contain 1 uppercase,1 lowercase letter,1 number and 1 special character*</p>
 
-          <Button
-            label="Sign up"
-            className="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600 transition-all"
-          />
-          {/* <p className="mt-6 text-gray-700 hover:cursor-pointer" onClick={()=>{navigate('/signin')}}>Already have an account?</p> */}
-          <BottomWarning label={"Don't have an account?"} buttonText={"Sign in"} to={"/signin"} />
+            <InputBox
+              onChange={(e) => setFirstName(e.target.value)}
+              placeholder="John"
+              label="First Name"
+              className="mb-4"
+            />
+            <InputBox
+              onChange={(e) => setLastName(e.target.value)}
+              placeholder="Doe"
+              label="Last Name"
+              className="mb-4"
+            />
+            <InputBox
+              onChange={(e) => setUserName(e.target.value)}
+              placeholder="akash@gmail.com"
+              label="Email"
+              className="mb-4"
+              type="email"
+            />
+            <InputBox
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="123456"
+              label="Password"
+              type="password"
+              className="mb-6"
+            />
+            <p className="text-sm text-gray-400">*password must contain 1 uppercase,1 lowercase letter,1 number and 1 special character*</p>
 
-        </div>
+            <Button
+              label="Sign up"
+              className="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600 transition-all"
+            />
+            {/* <p className="mt-6 text-gray-700 hover:cursor-pointer" onClick={()=>{navigate('/signin')}}>Already have an account?</p> */}
+            <BottomWarning label={"Don't have an account?"} buttonText={"Sign in"} to={"/signin"} />
+
+          </div>
         </form>
       </div>
 
