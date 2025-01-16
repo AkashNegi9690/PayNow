@@ -31,7 +31,7 @@ export const Signup = () => {
     } catch (error) {
       if (error.response && error.response.status === 411) {
         console.log("hello");
-        alert(error.response.data.message);
+        alert(error.response.data.errors);
        
       }
     }
