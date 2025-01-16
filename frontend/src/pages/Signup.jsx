@@ -14,9 +14,21 @@ export const Signup = () => {
   const [userName, setUserName] = useState("")
   const [password, setPassword] = useState("")
   const navigate = useNavigate()
-
+  const handleSubmit=async (e) => {
+    e.preventDefault();
+    const response = await axios.post("https://paynow-7wln.onrender.com/api/v1/user/signup", {
+      userName,
+      firstName,
+      lastName,
+      password
+    })
+    localStorage.setItem("token", response.data.token)
+    if (response.status === 200) {
+      navigate("/signin")
+    }
+  }
   return (
-    <div  iv className="bg-blue-500 min-h-screen">
+    <div  className="bg-blue-500 min-h-screen">
       <div className="h-16 shadow-md border border-b-2 bg-white flex items-center"><div className=" text-blue-500 font-semibold text-2xl mx-5">PayNow</div></div>
       {/* Hero Section */}
       <section className="text-center py-10 px-4" id="hero">
@@ -29,7 +41,8 @@ export const Signup = () => {
 
       {/* Signup Form */}
       <div className="flex justify-center pb-10">
-        <div className="rounded-lg bg-white w-96 text-center p-8">
+        <form onSubmit={handleSubmit} className="rounded-lg w-96 text-center p-8 bg-white">
+        <div className=" bg-white ">
           <Heading label={"Signup"}/>
           <SubHeading label={"Enter your credentials to access your account"} />
 
@@ -51,6 +64,7 @@ export const Signup = () => {
             placeholder="akash@gmail.com"
             label="Email"
             className="mb-4"
+            type="email"
           />
           <InputBox
             onChange={(e) => setPassword(e.target.value)}
@@ -61,18 +75,6 @@ export const Signup = () => {
           />
 
           <Button
-            onClick={async () => {
-              const response = await axios.post("https://paynow-7wln.onrender.com/api/v1/user/signup", {
-                userName,
-                firstName,
-                lastName,
-                password
-              })
-              localStorage.setItem("token", response.data.token)
-              if (response.status === 200) {
-                navigate("/signin")
-              }
-            }}
             label="Sign up"
             className="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600 transition-all"
           />
@@ -80,6 +82,7 @@ export const Signup = () => {
           <BottomWarning label={"Don't have an account?"} buttonText={"Sign in"} to={"/signin"} />
 
         </div>
+        </form>
       </div>
 
       {/* PayNow Section */}

@@ -40,6 +40,7 @@ export const SendMoney = () => {
                         class="no-spin-button flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
                         id="amount"
                         placeholder="Enter amount"
+                        required
                      />
                   </div>
                   <button onClick={() => {
