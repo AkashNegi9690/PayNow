@@ -26,6 +26,9 @@ export const Signup = () => {
     if (response.status === 200) {
       navigate("/signin")
     }
+    if(response.status === 411){
+      alert(response.data.error);
+    }
   }
   return (
     <div  className="bg-blue-500 min-h-screen">
@@ -73,6 +76,7 @@ export const Signup = () => {
             type="password"
             className="mb-6"
           />
+          <p className="text-sm text-gray-400">*password must contain 1 uppercase,1 lowercase letter,1 number and 1 special character*</p>
 
           <Button
             label="Sign up"
