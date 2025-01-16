@@ -45,7 +45,7 @@ function User({ user }) {
         <div className="flex justify-between items-center p-4 bg-gray-50 rounded-lg shadow-sm hover:bg-gray-100 transition duration-300 ease-in-out w-full">
             <div className="flex items-center space-x-4 w-full">
                 <div className="rounded-full h-16 w-16 bg-blue-500 flex justify-center items-center text-white font-bold text-xl">
-                    {user.firstName[0]}
+                    {user.firstName[0].toUpperCase()}
                 </div>
                 <div className="text-lg text-gray-700 font-semibold flex-grow">
                     {user.firstName} {user.lastName}
