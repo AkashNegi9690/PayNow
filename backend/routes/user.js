@@ -71,42 +71,42 @@ router.post("/signup", async (req, res) => {
 const signinBody = zod.object({
     username: zod.string().email(),
     password: zod.string()
-})
+});
+
 router.post("/signin", async (req, res) => {
     const { success } = signinBody.safeParse(req.body);
     if (!success) {
         return res.status(411).json({
             message: "incorrect inputs"
-        })
-    }
-    const user = await User.findOne({
-        userName: req.body.username,
-    })
-   
-    
-    if (user) {
-        const passwordMatched=await bcrypt.compare(req.body.password,user.password)
-        if(passwordMatched){
-            const token = jwt.sign({
-                userId: user._id
-            }, jwtSecret);
-    
-            res.json({
-                token: token
-            })
-            return;
-        }else{
-            res.status(401).json({
-                message:"wrong password"
-            })
-        }
-        
+        });
     }
 
-    res.status(411).json({
-        message: "Error while logging in"
-    })
+    const user = await User.findOne({
+        userName: req.body.username,
+    });
+
+    if (!user) {
+        return res.status(411).json({
+            message: "Error while logging in"
+        });
+    }
+
+    const passwordMatched = await bcrypt.compare(req.body.password, user.password);
+    if (!passwordMatched) {
+        return res.status(401).json({
+            message: "wrong password"
+        });
+    }
+
+    const token = jwt.sign({
+        userId: user._id
+    }, jwtSecret);
+
+    return res.json({
+        token: token
+    });
 });
+
 
 const updateBody = zod.object({
     password: zod.string().optional(),
